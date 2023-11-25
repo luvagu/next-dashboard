@@ -14,7 +14,7 @@ const FormSchema = z.object({
 });
 
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
-const EditInvoice = FormSchema.omit({ date: true });
+const EditInvoice = FormSchema.omit({ id: true, date: true });
 
 export async function createInvoice(formData: FormData) {
   const { customerId, amount, status } = CreateInvoice.parse({
@@ -43,11 +43,10 @@ export async function editInvoice(id: string, formData: FormData) {
   });
 
   const amountInCents = amount * 100;
-  const date = new Date().toISOString().split('T')[0];
 
   await sql`
     UPDATE invoices
-    SET customer_id=${customerId}, amount=${amountInCents}, status=${status}, date=${date}
+    SET customer_id=${customerId}, amount=${amountInCents}, status=${status}
     WHERE id=${id}
   `;
 
