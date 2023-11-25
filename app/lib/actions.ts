@@ -35,9 +35,8 @@ export async function createInvoice(formData: FormData) {
   redirect('/dashboard/invoices');
 }
 
-export async function editInvoice(formData: FormData) {
-  const { id, customerId, amount, status } = EditInvoice.parse({
-    id: formData.get('id'),
+export async function editInvoice(id: string, formData: FormData) {
+  const { customerId, amount, status } = EditInvoice.parse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
     status: formData.get('status'),
